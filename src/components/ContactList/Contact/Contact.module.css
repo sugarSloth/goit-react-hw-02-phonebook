@@ -1,0 +1,16 @@
+.name, .number {
+  overflow: hidden;
+}
+
+.delete_btn {
+  padding: 10px;
+  border-radius: 15px;
+  background-color: rgb(200, 120, 254);
+  font-weight: bold;
+}
+
+.delete_btn:hover,
+.delete_btn:focus {
+  background-color: rgb(95, 0, 112);
+  color: white;
+}
