@@ -6,14 +6,6 @@ import css from './ContactList.module.css';
 function ContactList({ contacts, filter, onBtnClick }) {
   const renderingContacts = filterContacts(contacts, filter);
 
-  if (contacts.length === 0) {
-    return <p>There are no contacts in the contact list</p>;
-  }
-
-  if (renderingContacts.length === 0) {
-    return <p>No contacts were found for your request</p>;
-  }
-
   return (
     <ul className={css.contact_list}>
       {renderingContacts.map((contact) => (

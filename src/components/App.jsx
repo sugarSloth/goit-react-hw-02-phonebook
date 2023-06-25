@@ -33,7 +33,7 @@ class App extends Component {
   isContactPresent = (name, number) => {
     return this.state.contacts.some(
       (contact) =>
-        contact.name.toLowerCase() === name.toLowerCase() &&
+        contact.name.toLowerCase() === name.toLowerCase() ||
         contact.number === number
     );
   };
@@ -44,12 +44,26 @@ class App extends Component {
     }));
   };
 
+  filterContacts = (contacts, filter) => {
+    if (filter === '') {
+      return contacts;
+    }
+
+    return contacts.filter((contact) =>
+      contact.name.toLowerCase().includes(filter.toLowerCase())
+    );
+  };
+
   onChangeFilterInput = debounce((event) => {
     this.setState({ filter: event.target.value.trim().toLowerCase() });
   }, 300);
 
   render() {
     const { contacts, filter } = this.state;
+    const renderingContacts = this.filterContacts(contacts, filter);
+    const noContactsMessage = 'There are no contacts in the contact list';
+    const noFilteredContactsMessage =
+      'No contacts were found for your request';
 
     return (
       <div className={css.app}>
@@ -58,8 +72,13 @@ class App extends Component {
         <section className={css.contacts}>
           <h2>Contacts</h2>
           <Filter value={filter} onChange={this.onChangeFilterInput} />
+          {contacts.length === 0 ? (
+            <p>{noContactsMessage}</p>
+          ) : renderingContacts.length === 0 ? (
+            <p>{noFilteredContactsMessage}</p>
+          ) : null}
           <ContactList
-            contacts={contacts}
+            contacts={renderingContacts}
             filter={filter}
             onBtnClick={this.deleteContact}
           />
