@@ -4,7 +4,9 @@ import Contact from './Contact';
 import css from './ContactList.module.css';
 
 function ContactList({ contacts, filter, onBtnClick }) {
-  const renderingContacts = filterContacts(contacts, filter);
+  const renderingContacts = contacts.filter((contact) =>
+    contact.name.toLowerCase().includes(filter.toLowerCase())
+  );
 
   return (
     <ul className={css.contact_list}>
@@ -28,13 +30,3 @@ ContactList.propTypes = {
 };
 
 export default ContactList;
-
-function filterContacts(contacts, filter) {
-  if (filter === '') {
-    return contacts;
-  }
-
-  return contacts.filter((contact) =>
-    contact.name.toLowerCase().includes(filter.toLowerCase())
-  );
-}
